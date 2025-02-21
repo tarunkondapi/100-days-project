@@ -1,0 +1,31 @@
+import random
+import string
+
+# Welcome message
+print("Welcome to the Password Generator!")
+
+# User input for password complexity
+letters_count = int(input("How many letters would you like in your password? "))
+symbols_count = int(input("How many symbols would you like? "))
+numbers_count = int(input("How many numbers would you like? "))
+
+# Character sets
+letters = list(string.ascii_letters)  # Uppercase + Lowercase
+symbols = list("!@#$%^&*()-_=+[]{};:,.<>?/")
+numbers = list(string.digits)  # 0-9
+
+# Generating random characters
+password_list = (
+    random.sample(letters, letters_count) +
+    random.sample(symbols, symbols_count) +
+    random.sample(numbers, numbers_count)
+)
+
+# Shuffling the password characters
+random.shuffle(password_list)
+
+# Converting list to string
+password = "".join(password_list)
+
+# Displaying the password
+print(f"Your generated password is: {password}")
