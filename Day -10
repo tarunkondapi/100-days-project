@@ -1,0 +1,51 @@
+import os
+
+
+def clear():
+    """Clears the console screen."""
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+# Dictionary of operations
+operations = {
+    '+': lambda a, b: a + b,
+    '-': lambda a, b: a - b,
+    '*': lambda a, b: a * b,
+    '/': lambda a, b: a / b if b != 0 else "Undefined (division by zero)"
+}
+
+
+def calculator():
+    """Runs the calculator program recursively."""
+    clear()
+    num1 = float(input("What's the first number? "))
+
+    for symbol in operations:
+        print(symbol)
+
+    should_continue = True
+
+    while should_continue:
+        operation_symbol = input("Pick an operation from the line above: ")
+        num2 = float(input("What's the next number? "))
+
+        calculation_function = operations.get(operation_symbol)
+
+        if calculation_function:
+            answer = calculation_function(num1, num2)
+            print(f"{num1} {operation_symbol} {num2} = {answer}")
+        else:
+            print("Invalid operation. Please try again.")
+            continue
+
+        choice = input(f"Type 'y' to continue calculating with {answer}, or 'n' to start a new calculation: ").lower()
+        if choice == 'y':
+            num1 = answer
+        else:
+            should_continue = False
+            calculator()  # Restart the calculator
+
+
+# Start the calculator
+calculator()
+
