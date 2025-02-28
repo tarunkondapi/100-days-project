@@ -1,0 +1,58 @@
+import random
+
+# Word list (You can expand this)
+WORD_LIST = ["python", "hangman", "developer", "bootcamp", "challenge"]
+
+
+def choose_word():
+    """Selects a random word from the list."""
+    return random.choice(WORD_LIST)
+
+
+def display_word(word, guessed_letters):
+    """Displays the word with guessed letters revealed."""
+    return " ".join([letter if letter in guessed_letters else "_" for letter in word])
+
+
+def hangman():
+    """Main function to run the Hangman game."""
+    word = choose_word()
+    guessed_letters = set()
+    attempts = 6  # Player gets 6 wrong attempts (7th is game over)
+
+    print("🎮 Welcome to Hangman! Try to guess the word. 🎮")
+
+    while attempts >= 0:
+         # Show current hangman stage
+        print("Word:", display_word(word, guessed_letters))
+        print(f"Lives left: {attempts}")
+
+        guess = input("Guess a letter: ").lower()
+
+        if len(guess) != 1 or not guess.isalpha():
+            print("Invalid input. Enter a single letter.\n")
+            continue
+
+        if guess in guessed_letters:
+            print(" You've already guessed that letter. Try again.\n")
+            continue
+
+        guessed_letters.add(guess)
+
+        if guess in word:
+            print(" Good guess!\n")
+        else:
+            print(" Wrong guess!\n")
+            attempts -= 1
+
+        if set(word) <= guessed_letters:
+            print(f"🎉 Congratulations! You guessed the word: {word}")
+            break
+
+    else:
+        print(HANGMAN_PICS[6])  # Final stage
+        print(f"💀 Game Over! The word was: {word}")
+
+
+if __name__ == "__main__":
+    hangman()
